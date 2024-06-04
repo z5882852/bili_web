@@ -50,6 +50,9 @@ export default defineComponent({
                 timeout: 10000,
                 params: {
                     cid: cid
+                },
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("access_token")
                 }
             }).then(response => {
                 let data = response.data.data;
@@ -58,7 +61,7 @@ export default defineComponent({
                 } else {
                     ElMessage({
                         type: "error",
-                        message: response.data.msg,
+                        message: response.data.message,
                     });
                 }
                 showLoading.value = false;

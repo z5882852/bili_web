@@ -55,6 +55,7 @@ export default defineComponent({
             initSentimentCount();
         }
         const initWordCloud = () => {
+            document.getElementById('wordcloud').setAttribute('_echarts_instance_', '')
             let containerDom = document.getElementsByClassName('chart-container')[0]
             wordcloud = echarts.init(document.getElementById('wordcloud'), null, {
                 width: containerDom.clientWidth  / 2
@@ -104,6 +105,7 @@ export default defineComponent({
             wordcloud.setOption(option)
         }
         const initTimeCount = () => {
+            document.getElementById('timecount').setAttribute('_echarts_instance_', '')
             let containerDom = document.getElementsByClassName('chart-container')[0]
             timeCount = echarts.init(document.getElementById('timecount'), null, {
                 width: containerDom.clientWidth  / 2 - 50
@@ -133,6 +135,7 @@ export default defineComponent({
             timeCount.setOption(option)
         }
         const initSentimentCount = () => {
+            document.getElementById('sentimentcount').setAttribute('_echarts_instance_', '')
             let containerDom = document.getElementsByClassName('chart-container')[0]
             sentimentCount = echarts.init(document.getElementById('sentimentcount'), null, {
                 width: containerDom.clientWidth  / 2 - 50

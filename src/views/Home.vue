@@ -66,6 +66,9 @@ export default defineComponent({
             window.$axios.get("/api/v1/video/info", {
                 params: {
                     url: searchValue.value
+                },
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("access_token")
                 }
             }).then(response => {
                 let data = response.data.data;
@@ -91,7 +94,7 @@ export default defineComponent({
                     showLoading.value = false;
                     ElMessage({
                         type: "error",
-                        message: response.data.msg,
+                        message: response.data.message,
                     });
                 }
             })

@@ -61,6 +61,7 @@ export default defineComponent({
                     {
                         method: "GET",
                         headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("access_token"),
                             "Content-Type": "application/json",
                         },
                     }

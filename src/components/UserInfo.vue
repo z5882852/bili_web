@@ -91,6 +91,9 @@ export default defineComponent({
         window.$axios.get("/api/v1/video/user/info", {
                 params: {
                     mid: mid
+                },
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("access_token")
                 }
             }).then(response => {
                 let data = response.data.data;
@@ -102,16 +105,23 @@ export default defineComponent({
                     isLoading.value = false;
                     ElMessage({
                         type: "error",
-                        message: response.data.msg,
+                        message: response.data.message,
                     });
                 }
             })
                 .catch(error => {
                     isLoading.value = false;
-                    ElMessage({
-                        type: "error",
-                        message: "获取用户信息失败",
-                    });
+                    if (error.response.status == "401") {
+                        ElMessage({
+                            type: "error",
+                            message: "请先登录",
+                        });
+                    } else {
+                        ElMessage({
+                            type: "error",
+                            message: "分析失败，请联系客服",
+                        });
+                    }
                     console.log(error);
                 });
     }
