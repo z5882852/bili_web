@@ -10,7 +10,7 @@
                     <el-input type="password" v-model="form.password" />
                 </el-form-item>
                 <el-form-item>
-                    <a href="/#/register"><el-button class="btn">注册</el-button></a>
+                    <a href="/#/register" class="btn"><el-button>注册</el-button></a>
                     <el-button class="btn" type="primary" @click="onSubmit">登录</el-button>
                 </el-form-item>
             </el-form>
@@ -49,7 +49,7 @@ export default defineComponent({
                         localStorage.setItem("access_token", response.data.access_token)
                         setTimeout(() => {
                             router.push({ path: "/home" });
-                        }, 1000)
+                        }, 200)
                     } else {
                         ElMessage({
                             type: "error",

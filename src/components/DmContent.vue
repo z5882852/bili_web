@@ -47,7 +47,7 @@ export default defineComponent({
         const analyseDm = (cid) => {
             showLoading.value = true;
             window.$axios.get("/api/v1/video/dm/analyse", {
-                timeout: 10000,
+                timeout: 16000,
                 params: {
                     cid: cid
                 },
@@ -69,7 +69,7 @@ export default defineComponent({
             })
                 .catch(error => {
                     showLoading.value = false;
-                    if (error.response.status == "401") {
+                    if (error.response && error.response.status == "401") {
                         ElMessage({
                             type: "error",
                             message: "请先登录",

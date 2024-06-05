@@ -10,18 +10,18 @@
                     <el-input type="password" v-model="form.password" />
                 </el-form-item>
                 <el-form-item label="确认密码">
-                    <el-input type="password" v-model="form.password" />
+                    <el-input type="password" v-model="form.confirm_pwd" />
                 </el-form-item>
                 <el-form-item label="性别">
-                <el-radio-group v-model="form.gender">
-                    <el-radio value="male">男</el-radio>
-                    <el-radio value="female">女</el-radio>
-                    <el-radio value="unknown">保密</el-radio>
-                </el-radio-group>
+                    <el-radio-group v-model="form.gender">
+                        <el-radio value="male">男</el-radio>
+                        <el-radio value="female">女</el-radio>
+                        <el-radio value="unknown">保密</el-radio>
+                    </el-radio-group>
                 </el-form-item>
                 <el-form-item>
-                    <a href="/#/login"><el-button class="btn">注册</el-button></a>
-                    <el-button class="btn" type="primary" @click="onSubmit">登录</el-button>
+                    <a href="/#/login" class="btn"><el-button>登录</el-button></a>
+                    <el-button class="btn" type="primary" @click="onSubmit">注册</el-button>
                 </el-form-item>
             </el-form>
         </el-main>
@@ -42,25 +42,34 @@ export default defineComponent({
         const form = reactive({
             username: '',
             password: '',
+            confirm_pwd: '',
             gender: 'male'
         })
 
         const onSubmit = () => {
-            const formData = new FormData();
-            formData.append('username', form.username);
-            formData.append('password', form.password);
+            if (form.password !== form.confirm_pwd) {
+                ElMessage({
+                    type: "warning",
+                    message: "密码不一致",
+                });
+                return
+            }
             showLoading.value = true;
-            window.$axios.post("/api/v1/login", formData)
+            window.$axios.post("/api/v1/register", {
+                username: form.username,
+                password: form.password,
+                gender: form.gender,
+            })
                 .then(response => {
                     if (response.data.code === 200) {
                         ElMessage({
                             type: "success",
-                            message: "登录成功",
+                            message: "注册成功",
                         });
                         localStorage.setItem("access_token", response.data.access_token)
                         setTimeout(() => {
-                            router.push({ path: "/home" });
-                        }, 2000)
+                            router.push({ path: "/login" });
+                        }, 200)
                     } else {
                         ElMessage({
                             type: "error",

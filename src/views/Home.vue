@@ -53,7 +53,7 @@ export default defineComponent({
         const selectedCollapse = ref("1");  // 默认选中第一个折叠页
         const showInfo = ref(false);
         const showLoading = ref(false);
-        const searchValue = ref('https://www.bilibili.com/video/BV18Z421H7yH?spm_id_from=333.1007.tianma.1-1-1.click');  // 输入框的值
+        const searchValue = ref('https://www.bilibili.com/video/BV19w4m1D7bs');  // 输入框的值
         const showSelectPage = ref(false);  // 是否显示选择分P页面
         const selectedPage = ref(0);  // 选择的分P
         const parsePage = ref(0);  // 解析的分P
@@ -100,7 +100,7 @@ export default defineComponent({
             })
                 .catch(error => {
                     showLoading.value = false;
-                    if (error.response.status == "401") {
+                    if (error.response && error.response.status == "401") {
                         ElMessage({
                             type: "error",
                             message: "请先登录",

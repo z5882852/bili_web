@@ -111,7 +111,7 @@ export default defineComponent({
             })
                 .catch(error => {
                     isLoading.value = false;
-                    if (error.response.status == "401") {
+                    if (error.response && error.response.status == "401") {
                         ElMessage({
                             type: "error",
                             message: "请先登录",
