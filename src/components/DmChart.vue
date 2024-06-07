@@ -11,7 +11,7 @@
             <div id="wordcloud" class="chart-box card"></div>
             <div id="timecount" class="chart-box card"></div>
             <div id="sentimentcount" class="chart-box card"></div>
-            <div id="" class="chart-box card"></div>
+            <div id="weightcount" class="chart-box card"></div>
         </div>
     </div>
 </template>
@@ -45,14 +45,15 @@ export default defineComponent({
         ]
         const dmData = ref([])
 
-
         let wordcloud = null
         let timeCount = null
         let sentimentCount = null
+        let weightCount = null
         const init = () => {
             initWordCloud();
             initTimeCount();
             initSentimentCount();
+            initWeightCount();
         }
         const initWordCloud = () => {
             document.getElementById('wordcloud').setAttribute('_echarts_instance_', '')
@@ -118,14 +119,14 @@ export default defineComponent({
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: []
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [
                     {
-                        data: [820, 932, 901, 934, 1290, 1330, 1320],
+                        data: [],
                         type: 'line',
                         areaStyle: {}
                     }
@@ -163,6 +164,34 @@ export default defineComponent({
             };
             
             sentimentCount.setOption(option)
+        }
+        const initWeightCount = () => {
+            document.getElementById('weightcount').setAttribute('_echarts_instance_', '')
+            let containerDom = document.getElementsByClassName('chart-container')[0]
+            weightCount = echarts.init(document.getElementById('weightcount'), null, {
+                width: containerDom.clientWidth  / 2 - 50
+            })
+            let option = {
+                title: {
+                    text: "权重分布",
+                    padding: 10
+                },
+                xAxis: {
+                    type: 'category',
+                    data: []
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: [],
+                        type: 'bar',
+                    }
+                ],
+            };
+            
+            weightCount.setOption(option)
         }
         const update = (data) => {
             dmData.value = data.dm_list
@@ -202,6 +231,40 @@ export default defineComponent({
                 ],
             })
             sentimentCount.resize()
+
+            if (data.dm_list.length === 0) {
+                return
+            }
+            let weightCountData = {}
+            for (let i=0; i<data.dm_list.length; i++) {
+                let weight = data.dm_list[i].weight
+                if (weightCountData[weight] === undefined) {
+                    weightCountData[weight] = 0
+                }
+                weightCountData[weight]++
+            }
+            let x_list = []
+            let y_list = []
+            for(let key in weightCountData){
+                x_list.push(key)
+                y_list.push(weightCountData[key])
+            }
+            weightCount.setOption({
+                xAxis: {
+                    type: 'category',
+                    data: x_list
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: y_list,
+                        type: 'bar',
+                    }
+                ],
+            })
+            weightCount.resize()
         }
 
         onMounted(() => {

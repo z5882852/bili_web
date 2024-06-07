@@ -42,7 +42,7 @@ export default defineComponent({
         })
 
         watch(
-            () => props.data,
+            () => [props.data, props.page],
             () => {
                 if (props.page !== 0) {
                     loadData();

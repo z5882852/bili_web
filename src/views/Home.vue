@@ -63,9 +63,13 @@ export default defineComponent({
 
         const handleSearch = () => {
             showLoading.value = true;
+            let url = searchValue.value.split("?")[0]
+            if (url.charAt(url.length - 1) === "/") {
+                url = url.substring(0, url.length - 1)
+            }
             window.$axios.get("/api/v1/video/info", {
                 params: {
-                    url: searchValue.value
+                    url: url
                 },
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("access_token")
@@ -79,6 +83,7 @@ export default defineComponent({
                     pages.value = data.pages;
 
                     if (pages.value.length > 1) {
+                        selectedCollapse.value = '1'
                         selectedPage.value = 1
                         showSelectPage.value = true;
                     } else {
@@ -125,7 +130,6 @@ export default defineComponent({
             parsePage.value  = selectedPage.value
             selectedCollapse.value = "0"
             selectedTap.value = 1
-            
         };
 
         return {

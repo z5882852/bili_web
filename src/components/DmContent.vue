@@ -114,8 +114,8 @@ export default defineComponent({
             () => {
                 if (
                     props.page !== 0 && 
-                    tempData.value !== props.data && 
-                    tempPage.value !== props.page
+                    (tempData.value !== props.data ||
+                    tempPage.value !== props.page)
                 ) {
                     tempData.value = props.data
                     tempPage.value = props.page
