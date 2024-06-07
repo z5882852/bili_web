@@ -20,9 +20,9 @@ app.mount('#app')
 
 
 // window.$baseURL = 'http://localhost:8089'
-window.$baseURL = 'http://43.156.168.243:1022'
+window.$baseURL = 'http://114.132.72.61:1022'
 window.$axios = axios.create({
-    //设置5秒超时时间
+    //设置超时时间
     timeout: 8000,
     baseURL: window.$baseURL,
 });

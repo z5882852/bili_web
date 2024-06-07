@@ -30,7 +30,7 @@ export default defineComponent({
         const activeIndex = ref('1');
         const handleSelect = (key) => {
             if (key === '0') {
-                router.push({ path: "/" });
+                router.push({ path: "/home" });
             } else if (key === '1') {
                 router.push({ path: "/home" });
             } else if (key === '2') {

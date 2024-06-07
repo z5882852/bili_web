@@ -42,6 +42,7 @@ export default defineComponent({
             sentiment_count: { positive: 0, negative: 0 }
         })
         const tempData = ref({})
+        const tempPage = ref(0)
         const showLoading = ref(false)
 
         const analyseDm = (cid) => {
@@ -97,7 +98,7 @@ export default defineComponent({
             } else {
                 ElMessage({
                     type: "error",
-                    message: "获取优化建议失败, 无法获取视频cid",
+                    message: "弹幕分析失败, 无法获取视频cid",
                 });
             }
         }
@@ -111,8 +112,13 @@ export default defineComponent({
         watch(
             () => props.tap,
             () => {
-                if (props.page !== 0 && tempData.value !== props.data) {
+                if (
+                    props.page !== 0 && 
+                    tempData.value !== props.data && 
+                    tempPage.value !== props.page
+                ) {
                     tempData.value = props.data
+                    tempPage.value = props.page
                     handleAnalyseDm()
                 }
             }

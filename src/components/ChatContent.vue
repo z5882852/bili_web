@@ -139,7 +139,7 @@ export default defineComponent({
             } else {
                 ElMessage({
                     type: "error",
-                    message: "获取优化建议失败, 无法获取视频cid",
+                    message: "加载图表失败, 无法获取视频cid",
                 });
             }
         };
